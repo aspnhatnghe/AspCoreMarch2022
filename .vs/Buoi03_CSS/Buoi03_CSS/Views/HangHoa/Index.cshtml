@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Buoi03_CSS.Models.HangHoa>
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/HangHoa.css" rel="stylesheet" />
+
+<h1>Danh sách</h1>
+@foreach (var item in Model)
+{
+    <div class="hanghoa">
+        <img src="~/HangHoa/iphone-x-256gb-gray.jpg" class="hanghoa-hinh" />
+        <h3 class="hanghoa-ten">@item.TenHangHoa</h3>
+        @if (item.HangMoi)
+        {
+            <img src="~/images/moi-icon.png" class="hanghoa-moi" />
+        }
+        <div class="hanghoa-gia">@item.DonGia.ToString("#,##0")</div>
+        <div class="hanghoa-icon">
+            <img src="~/images/Basket.png" />
+            <img src="~/images/favourites.png" />
+            <img src="~/images/Letter.png" />
+        </div>
+    </div>
+}
