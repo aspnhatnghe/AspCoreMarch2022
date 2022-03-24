@@ -12,10 +12,15 @@
                 alert('Click button');
             });
 
-            $("div").hover(function () {
-                $(this).hide();
+            //$("div").hover(function () {
+            //    $(this).hide();
+            //});
+            $("body .app").hover(function () {
+                $(this).css({ 'color': 'red'});
             });
-            
+            $("body > .asp").hover(function () {
+                $(this).css({ 'color': 'green' });
+            });
         });
         
     </script>
@@ -24,8 +29,15 @@
 <body>
     <button>SAY HELLO</button>
     <button>GOODBYE</button>
-    <div>HTML</div>
-    <div>CSS</div>
+    <span class="asp">Asp span CHILD</span>
+    <div class="app">
+        HTML
+        <span class="asp">Asp span</span>
+    </div>
+    <div>
+        CSS
+        <span class="asp">Asp span</span>
+    </div>
     <div>jquery</div>
     <div>bootstrap</div>
 </body>

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>Đăng nhập</h2>
+    <div>
+        Username
+        <input type="text" id="username" placeholder="Nhập tên đăng nhập" />
+    </div>
+    <div>
+        Password
+        <input type="password" id="password" placeholder="Nhập mật khẩuss" />
+    </div>
+    <button type="button" id="button_dang_nhap">Đăng nhập</button>
+    <div id="message"></div>
+    <style>
+        .empty{background-color: yellow}
+        .loi{color: red;}
+    </style>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        function checkEmpty(element) {
+            element.removeClass("empty");
+            if (element.val().length == 0) {
+                element.addClass("empty");
+                return true;
+            }
+            return false;
+        }
+        const dang_xuat = "Đăng xuất";
+        $(document).ready(function () {
+            $("#button_dang_nhap").click(function () {
+                let user = $("#username");
+                let pass = $("#password");
+                if (user.val() === dang_xuat) {
+                    $(this).html("Đăng nhập");
+                    user.val('');
+                    pass.val('');
+                    return;
+                }
+                //check xem đứa nào rỗng
+                if (checkEmpty(user) || checkEmpty(pass)) {
+                    $("#message").html("Chưa nhập");
+                    return;
+                }
+                $("#message").html("");
+                //nếu trên 4 kí tự là thành công
+                if (user.val().length > 4 && pass.val().length > 4) {
+                    $("#message").html("Đăng nhập thành công");
+                    $(this).html(dang_xuat;
+                } else {
+                    $("#message").html("Sai thông tin đăng nhập");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
