@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" /> 
+</head>
+<body>
+    <div>
+        Từ ngày: <input id="TuNgay" />
+        đến ngày: <input id="DenNgay" />
+    </div>
+    <div id="mytab">
+        <!--Menu-->
+        <ul>
+            <li>
+                <a href="#tab1">Thông số kỹ thuật</a>
+            </li>
+            <li>
+                <a href="#tab2">Hình ảnh</a>
+            </li>
+            <li>
+                <a href="#tab3">Video đập hộp</a>
+            </li>
+        </ul>
+        <!--Content-->
+        <div id="tab1">TAB 1</div>
+        <div id="tab2">TAB 2</div>
+        <div id="tab3">TAB 3</div>
+    </div>
+    <div>
+        Phim: <input id="ChonPhim" />
+    </div>
+    <script src="https://releases.jquery.com/git/jquery-3.x-git.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            //fetch('api_endpoint')
+            //    .then((resp) => resp.json())
+            //    .then((result) => {
+            //        $("#ChonPhim").autocomplete({
+            //            source: result
+            //        });
+            //    });
+            let availableTags = [
+                "ActionScript",
+                "AppleScript",
+                "PHP",
+                "Python",
+                "Ruby",
+                "Scala",
+                "Scheme"
+            ];
+            $("#ChonPhim").autocomplete({
+                source: availableTags
+            });
+            $("#mytab").tabs();
+            $("#TuNgay").datepicker({
+                maxDate: "-7D",
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange: "1970:2005"
+                yearRange: "-55:+00"
+            });
+            $("#DenNgay").datepicker({
+                maxDate: "0",
+                dateFormat: "dd-mm-yy"
+            });
+        });
+    </script>
+</body>
+</html>
