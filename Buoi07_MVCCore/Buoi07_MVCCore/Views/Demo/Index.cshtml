@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<h2>@ViewBag.HoTen</h2>
+<h3>Ngày thành lập: @ViewBag.NamThanhLap</h3>
+@{
+    DateTime ngayThanhLap = ViewBag.NamThanhLap != null ?(DateTime) ViewBag.NamThanhLap : DateTime.Now;
+    var soNamHoatDong = DateTime.Now.Year - ngayThanhLap.Year;
+}
+<h4>Đã hoạt động: @soNamHoatDong năm</h4>
+<dl>
+    <dd>@ViewBag.HangHoa?.ProductName</dd>
+    <dd>Giá: @ViewBag.HangHoa?.Price</dd>
+    <dd>Số lượng: @ViewBag.HangHoa?.Quantity</dd>
+    <dd>Tổng tiền: @ViewBag.HangHoa?.Total</dd>
+</dl>
+@{ 
+    var hanghoa = TempData["hanghoa"] as Product;
+}
+<dl>
+    <dd>@hanghoa?.ProductName</dd>
+    <dd>Giá: @hanghoa?.Price</dd>
+    <dd>Số lượng: @hanghoa?.Quantity</dd>
+    <dd>Tổng tiền: @hanghoa?.Total</dd>
+</dl>
+<div>Demo: @TempData["Demo"]</div>
