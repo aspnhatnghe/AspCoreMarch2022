@@ -10,6 +10,41 @@ namespace Buoi09_Validation.Controllers
 {
     public class DemoController : Controller
     {
+
+        [HttpGet]
+        public IActionResult CreateEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateEmployee(Employee emp)
+        {
+            if (ModelState.IsValid)
+            {
+                //thông báo lỗi do người dùng định nghĩa
+                ModelState.AddModelError("AAA", "Thành công");
+            }
+            else
+            {
+                ModelState.AddModelError("AAA", "Thất bại");
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> DemoAsyncRun()
+        {
+            var demo = new Demo();
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            var test1 = demo.Test01Async();
+            var test2 = demo.Test02Async();
+            var test3 = demo.Test03Async();
+            await test1; await test2; await test3;
+            stopWatch.Stop();
+            return Content($"Chạy hết {stopWatch.ElapsedMilliseconds}ms.");
+        }
+
         public IActionResult DemoSync()
         {
             var demo = new Demo();
@@ -20,7 +55,7 @@ namespace Buoi09_Validation.Controllers
             return Content($"Chạy hết {stopWatch.ElapsedMilliseconds}ms.");
         }
 
-        public IActionResult Index()
+        public IActionResult DemoRazor()
         {
             return View();
         }
