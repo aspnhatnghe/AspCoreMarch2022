@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Buoi09_Validation.Models
         [Display(Name = "Mã nhân viên")]
         [Required]
         [RegularExpression(@"NV\d{5}", ErrorMessage = "Đúng định dạng NVxxxxx")]
+        [Remote(controller: "Demo", action:"CheckValidEmployeeId", ErrorMessage ="Mã này đã có")]
         public string EmployeeId { get; set; }
 
         [Required]

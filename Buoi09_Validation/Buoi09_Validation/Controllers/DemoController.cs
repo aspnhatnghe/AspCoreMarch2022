@@ -10,6 +10,37 @@ namespace Buoi09_Validation.Controllers
 {
     public class DemoController : Controller
     {
+        public IActionResult DangKy()
+        {
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(string FullName, int Age)
+        {
+            return View();
+        }
+
+        public IActionResult CheckValidEmployeeId(string EmployeeId)
+        {
+            var empInDatabase = new List<string>()
+            {
+                "admin", "guest", "nhatnghe", "aspnet", "NV77777"
+            };
+            if (empInDatabase.Contains(EmployeeId))
+            {
+                return Json(false);
+            }
+            else
+            {
+                return Json(true);
+            }
+        }
 
         [HttpGet]
         public IActionResult CreateEmployee()
