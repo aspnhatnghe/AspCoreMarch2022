@@ -30,6 +30,12 @@ namespace Buoi09_Validation.Models
 
         public bool Gender { get; set; }
 
+
+        [Display(Name ="Ngày sinh")]
+        [CheckBirthDate]
+        public DateTime BirthDate { get; set; }
+
+
         [Range(0, double.MaxValue, ErrorMessage = "Lương chưa hợp lệ")]
         public double Salary { get; set; }
 
