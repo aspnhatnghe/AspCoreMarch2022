@@ -1,0 +1,10 @@
+﻿#myheader {
+    background-color: aquamarine;
+    min-height: 100px;
+}
+
+.mycontent {
+    padding: 5px;
+    min-height: 500px;
+    border: 1px solid blue;
+}

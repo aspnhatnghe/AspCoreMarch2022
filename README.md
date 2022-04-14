@@ -25,6 +25,8 @@ Syntax:
 * n*: Lặp n: 0 --> n lần
 * n+: Lặp n: 1 --> n (tối thiểu là 1)
 * n?: Lặp n: 0 hoặc 1 lần
+* {m}: Lặp chính xác m lần
+* {m,n}: Lặp từ m đến n lần
 
 
 ### The test()

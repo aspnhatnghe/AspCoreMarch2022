@@ -4,15 +4,46 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Buoi09_Validation.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Buoi09_Validation.Controllers
 {
     public class DemoController : Controller
     {
-        public IActionResult DangKy()
+        public IActionResult NewLayout()
         {
             return View();
+        }
+
+        public IActionResult DanhSach()
+        {
+            var danhSach = new string[]
+            {
+                "Bia", "Nước ngọt", "Cafe"
+            };
+            return PartialView("Category", danhSach);
+        }
+
+        public IActionResult NoTemplate()
+        {
+            return View();
+        }
+
+        const string MaNgauNhien = "MaNgauNhien";
+        public IActionResult DangKy()
+        {
+            var chuoiNgauNhien = MyTool.GenerateSecurityCode();
+            HttpContext.Session.SetString(MaNgauNhien, chuoiNgauNhien);
+
+            ViewBag.MaNgauNhien = chuoiNgauNhien;
+            return View();
+        }
+
+        public IActionResult CheckSecurityCode(string MaBaoMat)
+        {
+            var result = HttpContext.Session.GetString(MaNgauNhien) == MaBaoMat ? "true" : "false";
+            return Content(result);
         }
 
         public IActionResult Register()
