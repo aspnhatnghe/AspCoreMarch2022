@@ -22,6 +22,9 @@
                     };
                 }
                 @await Html.PartialAsync("Category", danhSach)
+
+                @await Component.InvokeAsync("CategoryMenu")
+
             </aside>
             <div class="col-9 mycontent">
                 @RenderBody()

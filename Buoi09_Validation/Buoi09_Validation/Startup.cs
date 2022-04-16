@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Buoi09_Validation.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +26,10 @@ namespace Buoi09_Validation
         {
             services.AddControllersWithViews();
             services.AddSession();
+
+            // đăng ký repository
+            // vòng đời của Dependency Injection: Singleton, Transient, Scoped
+            services.AddTransient<ICategory, MockCategory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
