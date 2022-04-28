@@ -23,13 +23,13 @@ namespace Buoi17_EFCore_DbFirst.Models
             try
             {
                 var fileName = DateTime.Now.Ticks.ToString() + myfile.FileName;
-                string fullPathFile = Path.Combine(Directory.GetCurrentDirectory(), "Hinh", folder, fileName);
+                string fullPathFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Hinh", folder, fileName);
                 using (var file = new FileStream(fullPathFile, FileMode.Create))
                 {
                     myfile.CopyTo(file);
                 }
                 return fileName;
-            } catch { return string.Empty; }            '
+            } catch { return string.Empty; } 
         }
     }
 }

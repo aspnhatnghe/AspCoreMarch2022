@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Buoi17_EFCore_DbFirst.Entities;
 using Microsoft.AspNetCore.Http;
+using Buoi17_EFCore_DbFirst.Models;
 
 namespace Buoi17_EFCore_DbFirst.Controllers
 {
@@ -58,6 +59,7 @@ namespace Buoi17_EFCore_DbFirst.Controllers
         {
             if (ModelState.IsValid)
             {
+                loai.Hinh = MyTool.UploadFileToFolder(Hinh, "Loai");
                 _context.Add(loai);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
