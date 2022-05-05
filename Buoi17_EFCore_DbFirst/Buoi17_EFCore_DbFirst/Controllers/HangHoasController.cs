@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Buoi17_EFCore_DbFirst.Entities;
 using Microsoft.AspNetCore.Http;
 using Buoi17_EFCore_DbFirst.Models;
+using Buoi17_EFCore_DbFirst.ViewModels;
 
 namespace Buoi17_EFCore_DbFirst.Controllers
 {
@@ -19,6 +20,48 @@ namespace Buoi17_EFCore_DbFirst.Controllers
         {
             _context = context;
         }
+
+
+        #region Tìm kiếm
+        public IActionResult TimKiem()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult TimKiem(string Keyword, double? FromPrice, double? ToPrice)
+        {
+            var dsHangHoa = _context.HangHoa.AsQueryable();
+            /*
+             .ToList(): translate sql statement và trả về danh sách
+             .AsQueryable(): vẫn còn query được, tức chưa có dịch ra câu lệnh SQL dể vào database lấy
+             */
+            if (!string.IsNullOrEmpty(Keyword))
+            {
+                dsHangHoa = dsHangHoa.Where(hh => hh.TenHh.Contains(Keyword));
+            }
+            if (FromPrice.HasValue)
+            {
+                dsHangHoa = dsHangHoa.Where(hh => hh.DonGia >= FromPrice.Value);
+            }
+            if (ToPrice.HasValue)
+            {
+                dsHangHoa = dsHangHoa.Where(hh => hh.DonGia <= ToPrice.Value);
+            }
+
+            var data = dsHangHoa.Select(hh => new KetQuaTimKiemVM
+            {
+                MaHh = hh.MaHh,
+                TenHh = hh.TenHh,
+                DonGia = hh.DonGia.Value,
+                NgaySX = hh.NgaySx,
+                Loai = hh.MaLoaiNavigation.TenLoai
+            }).ToList();
+            return View(data);
+        }
+        #endregion
+
+
 
         // GET: HangHoas
         public async Task<IActionResult> Index()
