@@ -27,6 +27,11 @@ namespace Buoi17_EFCore_DbFirst
         {
             services.AddControllersWithViews();
             services.AddDbContext<eStore20Context>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EStore")));
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(2);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +51,8 @@ namespace Buoi17_EFCore_DbFirst
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

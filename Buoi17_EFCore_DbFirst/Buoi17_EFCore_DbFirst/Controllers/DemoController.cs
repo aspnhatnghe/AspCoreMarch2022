@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Buoi17_EFCore_DbFirst.Entities;
+using Buoi17_EFCore_DbFirst.Models;
 using Buoi17_EFCore_DbFirst.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Buoi17_EFCore_DbFirst.Controllers
@@ -15,6 +18,34 @@ namespace Buoi17_EFCore_DbFirst.Controllers
         public DemoController(eStore20Context context)
         {
             _context = context;
+        }
+
+        public IActionResult DemoSession()
+        {
+            var loai = new Loai
+            {
+                MaLoai = 111,
+                TenLoai = "Bia 333"
+            };
+
+            HttpContext.Session.SetString("MyString", "Trung tâm CNTT Nhất Nghệ");
+            HttpContext.Session.SetInt32("MyInt", 19);
+            HttpContext.Session.Set<Loai>("MyBeer", loai);
+
+            return View();
+        }
+
+        public IActionResult DemoExtensionMethod()
+        {
+            var luckyNumber = new Random().Next(1000);
+            
+            var result = new StringBuilder();
+            result.AppendLine($"{luckyNumber} la so nguyen to:  {luckyNumber.IsPrime()}");
+
+            var le_2_9 = new DateTime(2022, 9, 2);
+            result.Append($"Còn {le_2_9.KhoangCachNgay(DateTime.Now)} ngày đến Lễ Quốc Khánh");
+
+            return Content(result.ToString());
         }
 
         public IActionResult ThongKe()
