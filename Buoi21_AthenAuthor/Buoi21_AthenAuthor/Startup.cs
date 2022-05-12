@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Buoi17_EFCore_DbFirst.Entities;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
+using Buoi21_AthenAuthor.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Buoi17_EFCore_DbFirst
+namespace Buoi21_AthenAuthor
 {
     public class Startup
     {
@@ -26,20 +27,13 @@ namespace Buoi17_EFCore_DbFirst
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-            services.AddDbContext<eStore20Context>(opt => opt.UseSqlServer(Configuration.GetConnectionString("EStore")));
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(2);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => {
-                    options.LoginPath = "/KhachHang/Login";
-                    options.LogoutPath = "/KhachHang/Logout";
-                    options.AccessDeniedPath = "/AccessDenied";
-                });
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +42,7 @@ namespace Buoi17_EFCore_DbFirst
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -60,8 +55,6 @@ namespace Buoi17_EFCore_DbFirst
 
             app.UseRouting();
 
-            app.UseSession();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -70,6 +63,7 @@ namespace Buoi17_EFCore_DbFirst
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
