@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Buoi17_EFCore_DbFirst.Entities;
+using Buoi17_EFCore_DbFirst.Models;
 using Buoi17_EFCore_DbFirst.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -47,8 +48,7 @@ namespace Buoi17_EFCore_DbFirst.Controllers
                 new Claim("CustomerId", khachHang.MaKh),
 
                 //đọc từ database
-                new Claim(ClaimTypes.Role, "Admin"),
-                new Claim(ClaimTypes.Role, "Sales")
+                new Claim(ClaimTypes.Role, khachHang.VaiTro.ToString())
             };
 
             var userIdentity = new ClaimsIdentity(claims, "login");
@@ -62,6 +62,19 @@ namespace Buoi17_EFCore_DbFirst.Controllers
                 return Redirect(ReturnUrl);
             }
             return RedirectToAction("Profile");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
+        }
+
+
+        [Authorize(Roles = Roles.Administrator)]
+        public IActionResult GrantPermission()
+        {
+            return View();
         }
 
         public IActionResult Profile()
