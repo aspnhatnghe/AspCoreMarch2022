@@ -23,19 +23,23 @@ namespace Buoi17_EFCore_DbFirst.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl = null)
         {
+            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
 
         [AllowAnonymous, HttpPost]
-        public async Task<IActionResult> Login(LoginVM model)
+        public async Task<IActionResult> Login(LoginVM model, string ReturnUrl = null)
         {
             var khachHang = _context.KhachHang.SingleOrDefault(p => p.MaKh == model.UserName && p.MatKhau == model.Password);
-            if(khachHang == null)
+            if (khachHang == null)
+            {
+                ViewBag.ReturnUrl = ReturnUrl;
                 return View();
+            }
 
-            //tạo cridential claims
+            //tạo cridential: claims identity
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, khachHang.HoTen),
@@ -52,7 +56,17 @@ namespace Buoi17_EFCore_DbFirst.Controllers
 
             await HttpContext.SignInAsync(userPrincipal);
 
+
+            if (Url.IsLocalUrl(ReturnUrl))
+            {
+                return Redirect(ReturnUrl);
+            }
             return RedirectToAction("Profile");
+        }
+
+        public IActionResult Profile()
+        {
+            return View();
         }
 
         public IActionResult Index()
