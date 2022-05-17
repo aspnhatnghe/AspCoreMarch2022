@@ -50,5 +50,36 @@ namespace Buoi17_EFCore_DbFirst.Controllers
         {
             _context = context;
         }
+
+        #region Tìm kiếm - trả về JSON
+        public IActionResult TimKiem()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult HandleSearch(string keyword, double? from, double? to`)
+        {
+            var data = _context.HangHoa.AsQueryable();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                data = data.Where(p => p.TenHh.Contains(keyword));
+            }
+            if (from.HasValue)
+            {
+                data = data.Where(p => p.DonGia.Value >= from);
+            }
+            if (to.HasValue)
+            {
+                data = data.Where(p => p.DonGia.Value <= to);
+            }
+            var result = data.Select(p => new { 
+                HangHoa = p.TenHh,
+                GiaBan = p.DonGia.Value,
+                Loai = p.MaLoaiNavigation.TenLoai
+            });
+            return Json(result);
+        }
+        #endregion
     }
 }

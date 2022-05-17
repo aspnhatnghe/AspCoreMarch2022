@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "TimKiem";
+}
+
+<h1>Tìm kiếm</h1>
+<fieldset>
+    Theo tên: <input id="Keyword" placeholder="Nhập tên" />
+    <br />
+    Giá từ: <input type="number" id="FromPrice" />
+    đến: <input type="number" id="ToPrice" />
+    <button type="button">Tìm</button>
+</fieldset>
+
+<fieldset>
+    <legend>Kết quả tìm kiếm</legend>
+    <table>
+        <thead>
+            <tr>
+                <th>Tên hàng hóa</th>
+                <th>Giá</th>
+                <th>Loại</th>
+            </tr>
+        </thead>
+        <tbody id="result"></tbody>
+    </table>
+</fieldset>
