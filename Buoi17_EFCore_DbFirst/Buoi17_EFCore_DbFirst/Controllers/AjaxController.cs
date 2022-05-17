@@ -58,7 +58,7 @@ namespace Buoi17_EFCore_DbFirst.Controllers
         }
 
         [HttpPost]
-        public IActionResult HandleSearch(string keyword, double? from, double? to`)
+        public IActionResult HandleSearch(string keyword, double? from, double? to)
         {
             var data = _context.HangHoa.AsQueryable();
             if (!string.IsNullOrEmpty(keyword))
