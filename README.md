@@ -2,4 +2,4 @@
 Lop ASP.NET Core KG 17/03/2022
 
 
-# Buổi 22 (14/05/2022): Authorization & AJAX
+# Buổi 24 (19/05/2022): WEB API
