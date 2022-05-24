@@ -49,6 +49,7 @@ namespace FinalProject
 
             app.UseRouting();
 
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -61,6 +62,9 @@ namespace FinalProject
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //Generate default data
+            MyDbInitialer.Seed(app);
         }
     }
 }
