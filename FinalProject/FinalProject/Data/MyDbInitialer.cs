@@ -31,6 +31,25 @@ namespace FinalProject.Data
                     });
                 }
 
+                if (!context.Colors.Any())
+                {
+                    context.AddRange(new BrandColor
+                    {
+                        Name = "Red",
+                        ColorName = "#FF0000"
+                    },
+                    new BrandColor
+                    {
+                        Name = "Green",
+                        ColorName = "#00FF00"
+                    },
+                    new BrandColor
+                    {
+                        Name = "Blue",
+                        ColorName = "#0000FF"
+                    });
+                }
+
                 context.SaveChanges();
             }
 
