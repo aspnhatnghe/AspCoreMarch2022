@@ -21,6 +21,19 @@ namespace FinalProject.Areas.Admin.Controllers
             _context = context;
         }
 
+        // GET: Admin/Products/Price
+        [HttpGet("Admin/Products/Price")]
+        public IActionResult ManagePrice()
+        {
+            var data = _context.ProductPrices
+                .Include(pp => pp.Product)
+                .Include(pp => pp.Size)
+                .Include(pp => pp.Color)
+                .ToList();
+
+            return View(data);
+        }
+
         // GET: Admin/Products
         public async Task<IActionResult> Index()
         {
