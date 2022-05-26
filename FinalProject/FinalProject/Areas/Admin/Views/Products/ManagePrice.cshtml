@@ -17,13 +17,32 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
+                <h4 class="modal-title">Product Price</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                Modal body..
+                <div class="form-group">
+                    <label class="form-control">Product</label>
+                    <select class="form-control" asp-items="@ViewBag.Products" id="popup_product"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control">Size</label>
+                    <select class="form-control" asp-items="@ViewBag.Sizes" id="popup_size"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control">Color</label>
+                    <select class="form-control" asp-items="@ViewBag.Colors" id="popup_color"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control">Price</label>
+                    <input class="form-control" id="popup_price"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control">Quantity</label>
+                    <input class="form-control" id="popup_quantity"/>
+                </div>
             </div>
 
             <!-- Modal footer -->
@@ -49,7 +68,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr id="p_@(item.ProductId)_@(item.SizeId)_@(item.ColorId)">
                 <td>@item.Product.ProductName</td>
                 <td>@item.Size.Name</td>
                 <td>@item.Color.Name</td>
@@ -70,7 +89,29 @@
     <script>
         $(function () {
             $(".btn-edit").click(function () {
-                $("#myModal").modal();
+                //set data
+                let tr = $(this).closest("tr");
+                if (tr.length > 0) {
+                    let tr_row = tr[0];
+                    let tr_id = $(tr_row).attr("id");
+                    let arrIds = tr_id.split("_");
+
+                    let priceTags = $(tr_row).find("input[name='Price']");
+                    if (priceTags.length > 0) {
+                        $("#popup_price").val($(priceTags[0]).val());
+                    }
+
+                    let qtyTags = $(tr_row).find("input[name='Quantity']");
+                    if (qtyTags.length > 0) {
+                        $("#popup_quantity").val($(qtyTags[0]).val());
+                    }
+
+                    $("#popup_product").val(arrIds[1]);
+                    $("#popup_size").val(arrIds[2]);
+                    $("#popup_color").val(arrIds[3]);
+
+                    $("#myModal").modal();
+                }
             });            
         });
     </script>

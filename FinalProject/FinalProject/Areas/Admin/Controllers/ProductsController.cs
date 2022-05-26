@@ -25,6 +25,18 @@ namespace FinalProject.Areas.Admin.Controllers
         [HttpGet("Admin/Products/Price")]
         public IActionResult ManagePrice()
         {
+            ViewBag.Sizes = new SelectList(_context.Sizes.ToList(), "Id", "Name");
+            ViewBag.Colors = new SelectList(_context.Colors.ToList(), "Id", "Name");
+            ViewBag.Products = new SelectList(
+                    _context.Products.Select(p => new
+                    {
+                        ProductId = p.ProductId,
+                        ProductName = p.ProductName
+                    }).ToList(),
+                    "ProductId",
+                    "ProductName"
+                );
+
             var data = _context.ProductPrices
                 .Include(pp => pp.Product)
                 .Include(pp => pp.Size)
@@ -32,6 +44,31 @@ namespace FinalProject.Areas.Admin.Controllers
                 .ToList();
 
             return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePrice(ProductPrice model)
+        {
+            try
+            {
+                var productPrice = _context.ProductPrices.SingleOrDefault(p => p.ProductId == model.ProductId && p.SizeId == model.SizeId && p.ColorId == model.ColorId);
+                if (productPrice != null)
+                {
+                    productPrice.Price = model.Price;
+                    productPrice.Quantity = model.Quantity;
+                }
+                else
+                {
+                    _context.Add(model);
+                }
+
+                _context.SaveChanges();
+                return Json(new { Success = true });
+            }
+            catch
+            {
+                return Json(new { Success = false });
+            }
         }
 
         // GET: Admin/Products
