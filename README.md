@@ -4,6 +4,11 @@ Lop ASP.NET Core KG 17/03/2022
 
 # Project
 
+## Buổi 04 (28/05/2022)
+- Xử lý AJAX về thay đổi giá
+- Hiện danh sách hàng hóa, chi tiết hàng hóa
+
+
 ## Buổi 02 (24/05/2022)
 - Tạo giao diện cho phân hệ quản lý
 	* Area
