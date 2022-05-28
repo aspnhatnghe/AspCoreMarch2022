@@ -6,7 +6,11 @@ Lop ASP.NET Core KG 17/03/2022
 
 ## Buổi 04 (28/05/2022)
 - Xử lý AJAX về thay đổi giá
-- Hiện danh sách hàng hóa, chi tiết hàng hóa
+- Hiện danh sách hàng hóa
+- Thư viện AutoMapper
+	```cs
+	AutoMapper.Extensions.Microsoft.DependencyInjection
+	```
 
 
 ## Buổi 02 (24/05/2022)
