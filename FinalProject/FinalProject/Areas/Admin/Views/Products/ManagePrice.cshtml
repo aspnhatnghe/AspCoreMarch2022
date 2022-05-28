@@ -37,11 +37,11 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control">Price</label>
-                    <input class="form-control" id="popup_price"/>
+                    <input class="form-control" id="popup_price" />
                 </div>
                 <div class="form-group">
                     <label class="form-control">Quantity</label>
-                    <input class="form-control" id="popup_quantity"/>
+                    <input class="form-control" id="popup_quantity" />
                 </div>
             </div>
 
@@ -87,6 +87,7 @@
     </tbody>
 </table>
 @section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function () {
             $("#popup_save").click(function () {
@@ -101,6 +102,22 @@
                         Quantity: $("#popup_quantity").val(),
                     },
                     success: function (response) {
+                        if (response.success) {
+                            $('#myModal').modal('hide');
+
+                            Swal.fire({
+                                title: 'Changes price successful',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                            }).then((result) => {
+                                //C1 ajax thay content
+
+                                //C2: reload page
+                                window.location.reload();
+                            });
+                        } else {
+                            Swal.fire('Changes price unsuccessful', '', 'error');
+                        }
                     },
                     error: function (response) {
                     }
@@ -131,7 +148,7 @@
 
                     $("#myModal").modal();
                 }
-            });            
+            });
         });
     </script>
 }
