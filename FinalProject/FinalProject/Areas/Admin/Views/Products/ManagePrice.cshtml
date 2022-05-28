@@ -47,6 +47,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="popup_save">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
@@ -88,6 +89,24 @@
 @section Scripts{
     <script>
         $(function () {
+            $("#popup_save").click(function () {
+                $.ajax({
+                    url: "/Admin/Products/UpdatePrice",
+                    type: "POST",
+                    data: {
+                        ProductId: $("#popup_product").val(),
+                        SizeId: $("#popup_size").val(),
+                        ColorId: $("#popup_color").val(),
+                        Price: $("#popup_price").val(),
+                        Quantity: $("#popup_quantity").val(),
+                    },
+                    success: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            });
+
             $(".btn-edit").click(function () {
                 //set data
                 let tr = $(this).closest("tr");

@@ -65,7 +65,7 @@ namespace FinalProject.Areas.Admin.Controllers
                 _context.SaveChanges();
                 return Json(new { Success = true });
             }
-            catch
+            catch (Exception ex)
             {
                 return Json(new { Success = false });
             }
