@@ -1,0 +1,12 @@
+﻿@model IEnumerable<FinalProject.Data.Category>
+
+<ul class="dropdown">
+    @foreach (var item in Model)
+    {
+        <li>
+            <a asp-action="Index" asp-controller="Product" asp-route-id="@item.CategoryId">
+                @item.CategoryName
+            </a>
+        </li>
+    }
+</ul>
