@@ -1,0 +1,63 @@
+﻿@model FinalProject.Data.Product
+@using FinalProject.Utils
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="~/Hinh/Product/@Model.Image" alt="Image" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-black">@Model.ProductName</h2>
+                <div>@Html.Raw(Model.Description)</div>
+                <p><strong class="text-primary h4" id="product_price">@Model.Price.ToVnd()</strong></p>
+
+                <div class="mb-1 d-flex">
+                    @foreach (var pprice in Model.ProductPrices)
+                    {
+                        <label for="option-sm" class="d-flex mr-3 mb-3">
+                            <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+                                <input type="radio" name="shop-sizes" class="product-size" value="@pprice.SizeId" data-price="@pprice.Price">
+                            </span>
+                            <span class="d-inline-block text-black">@pprice.Size.Name</span>
+                        </label>
+                    }
+                </div>
+                <div class="mb-5">
+                    <div class="input-group mb-3" style="max-width: 120px;">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                        </div>
+                        <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                        </div>
+                    </div>
+
+                </div>
+                <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            //set chọn giá đầu tiên (nếu có)
+            if ($("input.product-size").length > 0) {
+                const first_radio = $($("input.product-size")[0]);
+                first_radio.prop('checked', true);
+                $("#product_price").html(first_radio.data("price"));
+            }
+
+            //set sự click change giá
+            $("input.product-size").click(function () {
+                $("#product_price").html($(this).data("price"));
+            });
+        });
+    </script>
+}

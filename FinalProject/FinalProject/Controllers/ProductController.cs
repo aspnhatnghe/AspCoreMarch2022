@@ -6,6 +6,7 @@ using AutoMapper;
 using FinalProject.Data;
 using FinalProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject.Controllers
 {
@@ -46,6 +47,22 @@ namespace FinalProject.Controllers
             //}
 
             return View(data);
+        }
+
+        public IActionResult Detail(Guid id)
+        {
+            var prod = _context.Products
+                .Include(p => p.ProductPrices)
+                .ThenInclude(pp => pp.Size)
+                .SingleOrDefault(p => p.ProductId == id);
+            if(prod == null)
+            {
+                return NotFound();
+                //return Redirect("/NotFound");
+            }
+
+            ViewBag.Colors = _context.Colors.ToList();
+            return View(prod);
         }
     }
 }
