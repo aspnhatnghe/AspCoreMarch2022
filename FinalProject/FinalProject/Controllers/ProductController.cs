@@ -28,7 +28,22 @@ namespace FinalProject.Controllers
                 products = products.Where(p => p.CategoryId == id);
             }
 
-            var data = _mapper.Map<List<ProductVM>>(products.ToList());
+            var data = products.Select(p => new ProductVM { 
+                ProductId = p.ProductId,
+                ProductName = p.ProductName,
+                Image = p.Image,
+                SoldPrice = p.ProductPrices.FirstOrDefault().Price
+            }).ToList();
+
+            //var data = _mapper.Map<List<ProductVM>>(products.ToList());
+            //foreach(var item in data)
+            //{
+            //    var p_price = _context.ProductPrices.FirstOrDefault(c => c.ProductId == item.ProductId);
+            //    if(p_price != null)
+            //    {
+            //        item.SoldPrice = p_price.Price;
+            //    }
+            //}
 
             return View(data);
         }
