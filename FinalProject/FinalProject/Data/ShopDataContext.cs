@@ -24,6 +24,10 @@ namespace FinalProject.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //định nghĩa cho từng entity
+            modelBuilder.Entity<Customer>(e => {
+                e.HasIndex(c => c.UserName).IsUnique();
+            });
+
             modelBuilder.Entity<Category>(e =>
             {
                 e.ToTable("Category");
