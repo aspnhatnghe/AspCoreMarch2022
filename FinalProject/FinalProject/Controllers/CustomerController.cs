@@ -42,7 +42,7 @@ namespace FinalProject.Controllers
                     _context.SaveChanges();
                     return RedirectToAction("Login");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return View();
                 }
@@ -53,6 +53,37 @@ namespace FinalProject.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = _context.Customers.SingleOrDefault(c => c.UserName == model.UserName);
+
+                if (customer == null)
+                {
+                    ModelState.AddModelError("loi", "User này không có");
+                    return View();
+                }
+                if (!customer.IsActive)
+                {
+                    ModelState.AddModelError("loi", "User này chưa kích hoạt sử dụng");
+                    return View();
+                }
+                if(customer.Password != model.Password.ToSHA512Hash(customer.RandomKey))
+                {
+                    ModelState.AddModelError("loi", "Sai thông tin đăng nhập");
+                    return View();
+                }
+            }
             return View();
         }
     }
