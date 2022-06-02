@@ -1,5 +1,6 @@
 ﻿@model FinalProject.Data.Product
 @using FinalProject.Utils
+@using FinalProject.Data
 @{
     ViewData["Title"] = "Detail";
 }
@@ -26,6 +27,24 @@
                         </label>
                     }
                 </div>
+                @{
+                    var proSizes = Model.ProductPrices.Select(p => p.SizeId).Distinct().ToList();
+                }
+                <div class="mb-1 d-flex">
+                    @foreach (Size sItem in ViewBag.Sizes)
+                    {
+                        if (proSizes.Contains(sItem.Id))
+                        {
+                            <label for="option-sm" class="d-flex mr-3 mb-3">
+                                <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+                                    <input type="radio" name="shop-sizes" value="@sItem.Id">
+                                </span>
+                                <span class="d-inline-block text-black">@sItem.Name</span>
+                            </label>
+                        }
+                    }
+                </div>
+
                 <div class="mb-5">
                     <div class="input-group mb-3" style="max-width: 120px;">
                         <div class="input-group-prepend">

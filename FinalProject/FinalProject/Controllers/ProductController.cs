@@ -62,6 +62,7 @@ namespace FinalProject.Controllers
             }
 
             ViewBag.Colors = _context.Colors.ToList();
+            ViewBag.Sizes = _context.Sizes.ToList();
             return View(prod);
         }
     }
