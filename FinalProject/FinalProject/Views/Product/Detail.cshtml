@@ -29,6 +29,7 @@
                 </div>
                 @{
                     var proSizes = Model.ProductPrices.Select(p => p.SizeId).Distinct().ToList();
+                    var proColors = Model.ProductPrices.Select(p => p.ColorId).Distinct().ToList();
                 }
                 <div class="mb-1 d-flex">
                     @foreach (Size sItem in ViewBag.Sizes)
@@ -43,6 +44,18 @@
                             </label>
                         }
                     }
+                </div>
+                <div class="mb-5">
+                    <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
+                    @foreach (BrandColor cItem in ViewBag.Colors)
+                    {
+                        if (proColors.Contains(cItem.Id))
+                        {
+                            <a href="#" class="d-flex color-item align-items-center">
+                                <span class="bg-danger color d-inline-block rounded-circle mr-2" style="background:@cItem.ColorName !important"></span> <span class="text-black">@cItem.Name</span>
+                            </a>
+                        }
+                    }                    
                 </div>
 
                 <div class="mb-5">
