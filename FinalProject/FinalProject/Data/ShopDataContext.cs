@@ -18,6 +18,8 @@ namespace FinalProject.Data
         public DbSet<BrandColor> Colors { get; set; }
         public DbSet<ProductPrice> ProductPrices { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
