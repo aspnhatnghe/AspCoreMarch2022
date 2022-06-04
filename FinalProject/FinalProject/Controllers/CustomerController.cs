@@ -78,7 +78,7 @@ namespace FinalProject.Controllers
                     ModelState.AddModelError("loi", "User này chưa kích hoạt sử dụng");
                     return View();
                 }
-                if(customer.Password != model.Password.ToSHA512Hash(customer.RandomKey))
+                if (customer.Password != model.Password.ToSHA512Hash(customer.RandomKey))
                 {
                     ModelState.AddModelError("loi", "Sai thông tin đăng nhập");
                     return View();

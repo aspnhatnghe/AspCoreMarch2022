@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace FinalProject
 {
@@ -26,6 +27,13 @@ namespace FinalProject
             services.AddDbContext<ShopDbContext>(opt => {
                 opt.UseSqlServer(Configuration.GetConnectionString("ShopConnection"));
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option => {
+                    option.LoginPath = "/Customer/Login";
+                    option.LogoutPath = "/Customer/Logout";
+                    option.AccessDeniedPath = "/AccessDenied";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +66,7 @@ namespace FinalProject
 
             app.UseRouting();
 
-            
+            app.UseAuthentication();            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
