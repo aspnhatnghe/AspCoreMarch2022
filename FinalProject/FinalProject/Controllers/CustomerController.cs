@@ -72,7 +72,6 @@ namespace FinalProject.Controllers
             return Redirect("/");
         }
 
-
         public IActionResult Login()
         {
             return View();

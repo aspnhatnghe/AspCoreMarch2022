@@ -1,0 +1,39 @@
+﻿@model IEnumerable<FinalProject.ViewModels.FeatureRoleVM>
+
+@{
+    ViewData["Title"] = "AssignPermission";
+}
+
+<h1>Permission List</h1>
+
+Role: <select multiple asp-items="@ViewBag.Roles"></select>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Feature
+            </th>
+            <th>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FeatureName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleNames)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FeatureId">Edit</a>                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
