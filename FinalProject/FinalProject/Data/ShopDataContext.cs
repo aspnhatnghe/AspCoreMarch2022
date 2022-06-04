@@ -20,6 +20,10 @@ namespace FinalProject.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<FeatureRole> FeatureRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

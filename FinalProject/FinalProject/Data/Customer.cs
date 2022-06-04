@@ -22,10 +22,12 @@ namespace FinalProject.Data
         public string RandomKey { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
         public Customer()
         {
             Orders = new List<Order>();
             //Orders = new HashSet<Order>();
+            UserRoles = new HashSet<UserRole>();
         }
     }
 }
