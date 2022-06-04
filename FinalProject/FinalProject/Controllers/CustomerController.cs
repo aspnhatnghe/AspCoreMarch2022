@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using FinalProject.Data;
 using FinalProject.Utils;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject.Controllers
@@ -62,7 +64,7 @@ namespace FinalProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginVM model)
+        public async Task<IActionResult> Login(LoginVM model)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +85,18 @@ namespace FinalProject.Controllers
                     ModelState.AddModelError("loi", "Sai thông tin đăng nhập");
                     return View();
                 }
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, customer.FullName),
+                    new Claim("Username", customer.UserName),
+                    new Claim("UserId", customer.CustomerId.ToString()),
+                };
+
+                var claimIdentity = new ClaimsIdentity(claims, "login");
+                var principal = new ClaimsPrincipal(claimIdentity);
+                await HttpContext.SignInAsync(principal);
+                return Redirect("/");
             }
             return View();
         }
