@@ -41,6 +41,14 @@ namespace FinalProject.Controllers
                     customer.Password = model.Password.ToSHA512Hash(customer.RandomKey);
 
                     _context.Add(customer);
+
+
+                    //Add role default = customer
+                    _context.Add(new UserRole { 
+                        RoleId = 3, ///nhớ set cố định lúc init
+                        CustomerId = customer.CustomerId
+                    });
+
                     _context.SaveChanges();
                     return RedirectToAction("Login");
                 }
@@ -57,6 +65,13 @@ namespace FinalProject.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
+        }
+
 
         public IActionResult Login()
         {
@@ -92,6 +107,11 @@ namespace FinalProject.Controllers
                     new Claim("Username", customer.UserName),
                     new Claim("UserId", customer.CustomerId.ToString()),
                 };
+                //add role
+                foreach(var role in customer.UserRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role.Role.RoleName));
+                }
 
                 var claimIdentity = new ClaimsIdentity(claims, "login");
                 var principal = new ClaimsPrincipal(claimIdentity);

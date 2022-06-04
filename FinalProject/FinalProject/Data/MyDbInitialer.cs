@@ -50,6 +50,31 @@ namespace FinalProject.Data
                     });
                 }
 
+                if(!context.Roles.Any())
+                {
+                    context.AddRange(
+                        new Role {
+                            RoleName = "Administrator",
+                            Description = "Quản trị Hệ thống"
+                        },
+                        new Role
+                        {
+                            RoleName = "Sales",
+                            Description = "Nhận viên kinh doanh"
+                        },
+                        new Role
+                        {
+                            RoleName = "Customer",
+                            Description = "Khách hàng"
+                        },
+                        new Role
+                        {
+                            RoleName = "Accountant",
+                            Description = "Kế toán"
+                        }
+                    );
+                }
+
                 context.SaveChanges();
             }
 
