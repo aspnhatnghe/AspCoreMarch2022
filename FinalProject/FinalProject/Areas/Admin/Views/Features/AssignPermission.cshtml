@@ -81,7 +81,17 @@
                             feature: $("#sel_feature").val(),
                             roles: selected_roles
                         },
-                        success: function (response) {}
+                        success: function (response) {
+                            if (response.success) {
+                                alert("Thành công");
+                                window.location.reload();
+                            } else {
+                                alert("Thất bại");
+                            }
+                        },
+                        error: function (ex) {
+                            alert(ex)
+                        }
                     });
                 }
             });

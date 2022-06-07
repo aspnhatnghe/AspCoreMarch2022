@@ -59,7 +59,33 @@ namespace FinalProject.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AssignPermission(int feature, int[] roles)
         {
-            return Json(true);
+            try
+            {
+                var dsQuyenCu = _context.FeatureRoles.Where(p => p.FeatureId == feature).ToList();
+                //remove all
+                foreach (var item in dsQuyenCu)
+                {
+                    _context.Remove(item);
+                }
+                //re-assign
+                foreach (var roleId in roles)
+                {
+                    _context.Add(new FeatureRole
+                    {
+                        FeatureId = feature,
+                        RoleId = roleId
+                    });
+                }
+                _context.SaveChanges();
+                return Json(new { Success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { 
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
         }
 
         // GET: Admin/Features
