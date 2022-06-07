@@ -6,8 +6,39 @@
 
 <h1>Permission List</h1>
 
-Role: <select multiple asp-items="@ViewBag.Roles"></select>
 
+<!-- Button to Open the Modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    New permission
+</button>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Feature: <select id="sel_feature" asp-items="@ViewBag.Features"></select>
+                <br />
+                Roles: <select id="sel_role" multiple asp-items="@ViewBag.Roles"></select>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button id="btn_Save" type="button" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -31,9 +62,29 @@ Role: <select multiple asp-items="@ViewBag.Roles"></select>
                     @Html.DisplayFor(modelItem => item.RoleNames)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.FeatureId">Edit</a>                    
+                    <a asp-action="Edit" asp-route-id="@item.FeatureId">Edit</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#btn_Save").click(function () {
+                let selected_roles = $("#sel_role").val();
+                if (selected_roles.length > 0) {
+                    $.ajax({
+                        url: "/Admin/Features/AssignPermission",
+                        type: "POST",
+                        data: {
+                            feature: $("#sel_feature").val(),
+                            roles: selected_roles
+                        },
+                        success: function (response) {}
+                    });
+                }
+            });
+        });
+    </script>
+}

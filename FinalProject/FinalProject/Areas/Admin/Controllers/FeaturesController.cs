@@ -20,6 +20,7 @@ namespace FinalProject.Areas.Admin.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public IActionResult AssignPermission()
         {
             var data = _context.FeatureRoles
@@ -30,6 +31,8 @@ namespace FinalProject.Areas.Admin.Controllers
 
             var roles = _context.Roles.ToList();
             ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+            var features = _context.Features.ToList();
+            ViewBag.Features = new SelectList(features, "FeatureId", "FeatureName");
 
             var dataGroup = _context.FeatureRoles
                 .Include(fr => fr.Role)
@@ -51,6 +54,12 @@ namespace FinalProject.Areas.Admin.Controllers
 
             //return View(data);
             return View(dataGroup);
+        }
+
+        [HttpPost]
+        public IActionResult AssignPermission(int feature, int[] roles)
+        {
+            return Json(true);
         }
 
         // GET: Admin/Features
